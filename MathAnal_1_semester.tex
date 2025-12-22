@@ -1,0 +1,2075 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{hyperref}
+\usepackage{setspace} % Для управления межстрочными интервалами
+
+% Стиль для теорем и определений без нумерации
+\theoremstyle{definition}
+\newtheorem*{definition}{Определение}
+\newtheorem*{theorem}{Теорема}
+\newtheorem*{proofnote}{Доказательство}
+\renewenvironment{definition}{\textbf{Определение.}\par}{\par}
+\renewenvironment{theorem}{\textbf{Теорема.}\par}{\par}
+\renewenvironment{proofnote}{\textbf{Доказательство.}\par}{\qed}
+% Удобные команды
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\limn}{\lim\limits_{n\to\infty}}
+\newcommand{\limx}[1]{\lim\limits_{x\to #1}}
+
+% Настройка отступов между абзацами
+\setlength{\parskip}{0.5em} % Отступ между абзацами
+\setlength{\parindent}{0pt} % Отступ первой строки абзаца
+
+\begin{document}
+
+% Титульный лист
+\begin{titlepage}
+\begin{center}
+    \vspace*{5cm}
+    
+    {\Huge\textbf{Билеты для экзамена \\[0.3cm] по математическому анализу}}
+    
+    \vspace{1.5cm}
+    
+    {\Large 1 семестр}
+    
+    \vspace{1.5cm}
+    
+    {\LARGE\textbf{Искусственный интеллект и наука о данных}}
+    
+    \vspace{2cm}
+    
+    {\large На основе учебника \\ О.Л. Виноградова \\ «Математический анализ»}
+    
+    \vspace{2cm}
+    
+    \begin{minipage}{0.8\textwidth}
+    \centering
+    \rule{\textwidth}{1pt}
+    
+    \vspace{0.5cm}
+    
+    {\large Составители:} \\[0.3cm]
+    {\large Deepseek, ChatGPT и Artemka}
+    
+    \vspace{0.5cm}
+    
+    \end{minipage}
+    
+    \vfill
+\end{center}
+\end{titlepage}
+
+% Начинаем билеты с новой страницы
+\newpage
+
+\section*{Билет 1. Теорема о существовании $\sup E$}
+
+\begin{definition}
+Пусть $E \subset \mathbb{R}$, $E \neq \varnothing$, $E$ ограничено сверху. Число $b \in \mathbb{R}$ называется \textbf{точной верхней гранью} множества $E$ и обозначается $\sup E$, если:
+\begin{enumerate}
+    \item $\forall x \in E : x \leq b$ (т.е. $b$ — верхняя граница);
+    \item $\forall \varepsilon > 0 \; \exists x \in E : x > b - \varepsilon$ (т.е. любое число меньшее $b$ не является верхней границей).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[существование $\sup E$]
+Всякое непустое ограниченное сверху подмножество $\mathbb{R}$ имеет точную верхнюю грань.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $E \neq \varnothing$, $E$ ограничено сверху. Выберем $x_0 \in E$ и $M$ — верхнюю границу $E$ ($x_0 \leq M$). Положим $[a_1, b_1] = [x_0, M]$. Отрезок $[a_1, b_1]$ обладает свойствами:
+\[
+[a_1, b_1] \cap E \neq \varnothing, \quad (b_1, +\infty) \cap E = \varnothing.
+\]
+
+Рассмотрим середину отрезка $c_1 = \frac{a_1 + b_1}{2}$. Если $(c_1, b_1] \cap E \neq \varnothing$, то положим $[a_2, b_2] = [c_1, b_1]$, иначе $[a_2, b_2] = [a_1, c_1]$. В обоих случаях:
+\[
+[a_2, b_2] \cap E \neq \varnothing, \quad (b_2, +\infty) \cap E = \varnothing.
+\]
+
+Продолжая процесс, получим последовательность вложенных отрезков $\{[a_n, b_n]\}$, для которых:
+\[
+[a_n, b_n] \cap E \neq \varnothing, \quad (b_n, +\infty) \cap E = \varnothing, \quad b_n - a_n = \frac{M - x_0}{2^{n-1}} \to 0.
+\]
+
+По теореме о вложенных отрезках (аксиома Кантора) существует единственная точка $c$, принадлежащая всем отрезкам, причём $a_n \to c$, $b_n \to c$.
+
+Покажем, что $c = \sup E$:
+\begin{enumerate}
+    \item Если $x \in E$, то $x \leq b_n$ для всех $n$ (иначе $x > b_n$ для некоторого $n$, что противоречит свойству $(b_n, +\infty) \cap E = \varnothing$). Переходя к пределу, получим $x \leq c$. Значит, $c$ — верхняя граница.
+    \item Возьмём $\varepsilon > 0$. Так как $a_n \to c$, найдётся $N$ такой, что $a_N > c - \varepsilon$. По построению $[a_N, b_N] \cap E \neq \varnothing$, значит, существует $x \in E$, $x \geq a_N > c - \varepsilon$. Таким образом, $c - \varepsilon$ не является верхней границей.
+\end{enumerate}
+
+Следовательно, $c = \sup E$. 
+\end{proofnote}
+
+\section*{Билет 2. Теорема о существовании $\inf E$}
+
+\begin{definition}
+Пусть $E \subset \mathbb{R}$, $E \neq \varnothing$, $E$ ограничено снизу. Число $a \in \mathbb{R}$ называется \textbf{точной нижней гранью} множества $E$ и обозначается $\inf E$, если:
+\begin{enumerate}
+    \item $\forall x \in E : x \geq a$ (т.е. $a$ — нижняя граница);
+    \item $\forall \varepsilon > 0 \; \exists x \in E : x < a + \varepsilon$ (т.е. любое число большее $a$ не является нижней границей).
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[существование $\inf E$]
+Всякое непустое ограниченное снизу подмножество $\mathbb{R}$ имеет точную нижнюю грань.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $E$ ограничено снизу. Рассмотрим множество $-E = \{-x : x \in E\}$. Оно ограничено сверху (так как $E$ ограничено снизу). По теореме о существовании $\sup E$ у него существует $\sup(-E) = s$. Положим $i = -s$. Докажем, что $i = \inf E$:
+
+\begin{enumerate}
+    \item Для любого $x \in E$ имеем $-x \in -E$, значит, $-x \leq s$, откуда $x \geq -s = i$. Следовательно, $i$ — нижняя граница $E$.
+    \item Возьмём $\varepsilon > 0$. Так как $s = \sup(-E)$, существует $y \in -E$ такой, что $y > s - \varepsilon$. Пусть $y = -x$ для некоторого $x \in E$. Тогда $-x > s - \varepsilon$, т.е. $x < -s + \varepsilon = i + \varepsilon$. Значит, $i + \varepsilon$ не является нижней границей.
+\end{enumerate}
+
+Таким образом, $i = \inf E$.
+\end{proofnote}
+
+\section*{Билет 3. Предел последовательности: определение, свойства, единственность}
+
+\begin{definition}
+Число $a \in \mathbb{R}$ называется \textbf{пределом последовательности} $\{x_n\}$, если:
+\[
+\forall \varepsilon > 0 \; \exists N \in \mathbb{N} \; \forall n > N : |x_n - a| < \varepsilon.
+\]
+Обозначение: $\lim\limits_{n \to \infty} x_n = a$ или $x_n \to a$.
+\end{definition}
+
+\textbf{Свойства:}
+\begin{enumerate}
+    \item \textbf{Единственность предела.} Если $x_n \to a$ и $x_n \to b$, то $a = b$.
+    \item \textbf{Ограниченность сходящейся последовательности.} Если $x_n \to a$, то $\exists M > 0 \; \forall n : |x_n| \leq M$.
+    \item \textbf{Предельный переход в неравенстве.} Если $x_n \leq y_n$ для всех $n$ и существуют пределы $\lim x_n = a$, $\lim y_n = b$, то $a \leq b$.
+    \item \textbf{Теорема о сжатой последовательности.} Если $x_n \leq y_n \leq z_n$ для всех $n$ и $\lim x_n = \lim z_n = a$, то $\lim y_n = a$.
+\end{enumerate}
+
+\begin{proofnote}[единственности]
+Предположим, что $x_n \to a$ и $x_n \to b$, $a \neq b$. Пусть $\varepsilon = \frac{|a-b|}{2} > 0$. Тогда:
+\[
+\exists N_1 \; \forall n > N_1 : |x_n - a| < \varepsilon, \quad \exists N_2 \; \forall n > N_2 : |x_n - b| < \varepsilon.
+\]
+Возьмём $n > \max(N_1, N_2)$. Тогда:
+\[
+|a-b| \leq |a - x_n| + |x_n - b| < \varepsilon + \varepsilon = |a-b|,
+\]
+что противоречиво. Значит, $a = b$.
+\end{proofnote}
+\begin{proofnote}[ограниченности]
+Пусть $x_n \to a$. По определению предела, для $\varepsilon = 1$ существует номер $N$ такой, что для всех $n > N$ выполняется:
+\[
+|x_n - a| < 1.
+\]
+
+Рассмотрим два случая:
+
+1. Для $n > N$:
+\[
+|x_n| = |x_n - a + a| \leq |x_n - a| + |a| < 1 + |a|.
+\]
+
+2. Для $n \leq N$: конечное множество $\{x_1, x_2, \dots, x_N\}$ ограничено, так как оно конечно. Обозначим:
+\[
+M_1 = \max\{|x_1|, |x_2|, \dots, |x_N|\}.
+\]
+Тогда для всех $n \leq N$:
+\[
+|x_n| \leq M_1.
+\]
+
+Выберем:
+\[
+M = \max\{M_1, 1 + |a|\}.
+\]
+
+Тогда для всех $n \in \mathbb{N}$:
+\[
+|x_n| \leq M.
+\]
+
+Таким образом, последовательность $\{x_n\}$ ограничена.
+
+\vspace{0.5cm}
+
+\textbf{Альтернативное доказательство ограниченности:}
+
+Поскольку $x_n \to a$, для $\varepsilon = 1$ найдётся $N$ такое, что для всех $n > N$:
+\[
+|x_n - a| < 1 \quad \Rightarrow \quad |x_n| < 1 + |a|.
+\]
+
+Пусть 
+\[
+M = \max\{|x_1|, |x_2|, \dots, |x_N|, 1 + |a|\}.
+\]
+
+Тогда для любого $n \in \mathbb{N}$:
+\[
+|x_n| \leq M.
+\]
+
+Следовательно, последовательность $\{x_n\}$ ограничена.
+\end{proofnote}
+
+
+\section*{Билет 4. $\lim c$, $\lim c x_n$, $\lim(x_n + y_n)$}
+
+\begin{theorem}
+\begin{enumerate} 
+    \item $\lim\limits_{n \to \infty} c = c$ (постоянная последовательность).
+    \item Если $\lim x_n = a$, то $\lim (c x_n) = c a$.
+    \item Если $\lim x_n = a$, $\lim y_n = b$, то $\lim (x_n + y_n) = a + b$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Для любого $\varepsilon > 0$ возьмём $N = 1$. Тогда для всех $n > N$ имеем $|c - c| = 0 < \varepsilon$.
+    \item Пусть $x_n \to a$. Возьмём $\varepsilon > 0$. Если $c = 0$, то $c x_n = 0$, предел равен 0. Если $c \neq 0$, выберем $N$ такой, что $|x_n - a| < \frac{\varepsilon}{|c|}$ для всех $n > N$. Тогда:
+    \[
+    |c x_n - c a| = |c| |x_n - a| < |c| \cdot \frac{\varepsilon}{|c|} = \varepsilon.
+    \]
+    \item Пусть $x_n \to a$, $y_n \to b$. Для $\varepsilon > 0$ выберем $N_1$, $N_2$ такие, что:
+    \[
+    |x_n - a| < \frac{\varepsilon}{2} \; \forall n > N_1, \quad |y_n - b| < \frac{\varepsilon}{2} \; \forall n > N_2.
+    \]
+    Пусть $N = \max(N_1, N_2)$. Тогда для $n > N$:
+    \[
+    |(x_n + y_n) - (a + b)| \leq |x_n - a| + |y_n - b| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 5. $\lim(x_n y_n)$}
+
+\begin{theorem}
+Если $\lim x_n = a$, $\lim y_n = b$, то $\lim (x_n y_n) = a b$.
+\end{theorem}
+
+\begin{proofnote}
+Используем равенство:
+\[
+x_n y_n - a b = x_n y_n - x_n b + x_n b - a b = x_n (y_n - b) + (x_n - a) b.
+\]
+
+Так как $x_n \to a$, последовательность $\{x_n\}$ ограничена: $\exists M > 0 \; \forall n : |x_n| \leq M$. Возьмём $\varepsilon > 0$. Выберем $N_1$ такой, что $|x_n - a| < \frac{\varepsilon}{2(|b|+1)}$ для всех $n > N_1$. Выберем $N_2$ такой, что $|y_n - b| < \frac{\varepsilon}{2M}$ для всех $n > N_2$. Пусть $N = \max(N_1, N_2)$. Тогда для $n > N$:
+\[
+|x_n y_n - a b| \leq |x_n| |y_n - b| + |x_n - a| |b| < M \cdot \frac{\varepsilon}{2M} + \frac{\varepsilon}{2(|b|+1)} \cdot |b| \leq \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+\]
+\end{proofnote}
+
+\section*{Билет 6. $\lim 1/x_n$, $\lim y_n/x_n$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item Если $\lim x_n = a \neq 0$ и $x_n \neq 0$ для всех $n$, то $\lim \frac{1}{x_n} = \frac{1}{a}$.
+    \item Если $\lim y_n = b$, $\lim x_n = a \neq 0$ и $x_n \neq 0$, то $\lim \frac{y_n}{x_n} = \frac{b}{a}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Пусть $a \neq 0$. Покажем, что $\left| \frac{1}{x_n} - \frac{1}{a} \right| \to 0$. Имеем:
+    \[
+    \left| \frac{1}{x_n} - \frac{1}{a} \right| = \frac{|x_n - a|}{|x_n| |a|}.
+    \]
+    Так как $x_n \to a$, найдётся $N_1$ такой, что $|x_n - a| < \frac{|a|}{2}$ для всех $n > N_1$. Тогда $|x_n| > \frac{|a|}{2}$. Далее, для $\varepsilon > 0$ выберем $N_2$ такой, что $|x_n - a| < \frac{\varepsilon |a|^2}{2}$ для всех $n > N_2$. Пусть $N = \max(N_1, N_2)$. Тогда для $n > N$:
+    \[
+    \left| \frac{1}{x_n} - \frac{1}{a} \right| < \frac{\frac{\varepsilon |a|^2}{2}}{\frac{|a|}{2} \cdot |a|} = \varepsilon.
+    \]
+    \item По пункту 1 $\frac{1}{x_n} \to \frac{1}{a}$, по теореме о пределе произведения $y_n \cdot \frac{1}{x_n} \to b \cdot \frac{1}{a} = \frac{b}{a}$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 7. Предельные неравенства}
+
+\begin{theorem}
+\begin{enumerate}
+    \item Если $x_n \leq y_n$ для всех $n$ и существуют пределы $\lim x_n = a$, $\lim y_n = b$, то $a \leq b$.
+    \item Если $x_n \leq y_n \leq z_n$ для всех $n$ и $\lim x_n = \lim z_n = a$, то $\lim y_n = a$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Предположим, что $a > b$. Пусть $\varepsilon = \frac{a-b}{2} > 0$. Тогда:
+    \[
+    \exists N_1 \; \forall n > N_1 : x_n > a - \varepsilon, \quad \exists N_2 \; \forall n > N_2 : y_n < b + \varepsilon.
+    \]
+    Для $n > \max(N_1, N_2)$ имеем:
+    \[
+    y_n < b + \varepsilon = \frac{a+b}{2} = a - \varepsilon < x_n,
+    \]
+    что противоречит условию $x_n \leq y_n$. Значит, $a \leq b$.
+    \item Для $\varepsilon > 0$ выберем $N$ такой, что для всех $n > N$ одновременно:
+    \[
+    a - \varepsilon < x_n \leq y_n \leq z_n < a + \varepsilon.
+    \]
+    Тогда $|y_n - a| < \varepsilon$, значит, $y_n \to a$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 8. Предел монотонной возрастающей последовательности}
+
+\begin{theorem}
+Если последовательность $\{x_n\}$ возрастает и ограничена сверху, то она сходится, причём:
+\[
+\lim_{n \to \infty} x_n = \sup \{x_n\}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Пусть $E = \{x_n\}$. Так как $E$ ограничено сверху, по теореме о существовании $\sup E$ существует $s = \sup E$. Покажем, что $x_n \to s$. Возьмём $\varepsilon > 0$. По определению супремума существует $N$ такой, что $x_N > s - \varepsilon$. В силу возрастания для всех $n > N$ имеем $x_n \geq x_N > s - \varepsilon$. Кроме того, $x_n \leq s$ для всех $n$. Следовательно, для всех $n > N$:
+\[
+s - \varepsilon < x_n \leq s < s + \varepsilon \quad \Rightarrow \quad |x_n - s| < \varepsilon.
+\]
+\end{proofnote}
+
+\section*{Билет 9. Предел монотонной убывающей последовательности}
+
+\begin{theorem}
+Если последовательность $\{y_n\}$ убывает и ограничена снизу, то она сходится, причём:
+\[
+\lim_{n \to \infty} y_n = \inf \{y_n\}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Аналогично предыдущему. Пусть $i = \inf \{y_n\}$. Возьмём $\varepsilon > 0$. Существует $N$ такой, что $y_N < i + \varepsilon$. В силу убывания для всех $n > N$ имеем $y_n \leq y_N < i + \varepsilon$. Кроме того, $y_n \geq i$. Следовательно, для всех $n > N$:
+\[
+i \leq y_n < i + \varepsilon \quad \Rightarrow \quad |y_n - i| < \varepsilon.
+\]
+\end{proofnote}
+
+\section*{Билет 10. Теорема Кантора о вложенных промежутках}
+
+\begin{theorem}
+Пусть $\{[a_n, b_n]\}_{n=1}^\infty$ — последовательность вложенных отрезков, т.е.:
+\[
+a_n \leq a_{n+1} \leq b_{n+1} \leq b_n \quad \forall n.
+\]
+Пусть также выполняется условие:
+\[
+b_n - a_n \to 0 \quad \text{при} \quad n \to \infty.
+\]
+Тогда существует единственная точка $c$, принадлежащая всем отрезкам:
+\[
+\bigcap_{n=1}^\infty [a_n, b_n] = \{c\}.
+\]
+\end{theorem}
+
+Рассмотрим два подхода к доказательству.
+
+\textbf{Доказательство через супремум и инфимум (кратко)} 
+Множество $\{a_n\}$ ограничено сверху (например, числом $b_1$), а множество $\{b_n\}$ ограничено снизу (числом $a_1$). Пусть:
+\[
+c = \sup \{a_n\}, \quad d = \inf \{b_n\}.
+\]
+Так как $a_n \leq b_m$ для любых $n, m$ (в частности, $a_n \leq b_n$), то $c \leq d$. 
+Из условия $b_n - a_n \to 0$ следует, что $c = d$.
+Любое число $c \leq x \leq d$ принадлежит всем отрезкам. 
+В частности, $c$ принадлежит всем отрезкам, так как $a_n \leq c \leq b_n$ для всех $n$.
+
+\textbf{Доказательство через пределы (подробно)} 
+
+1) Существование:
+
+Из вложенности отрезков следует, что последовательность $\{a_n\}$ монотонно возрастает и ограничена сверху (например, $b_1$), 
+а последовательность $\{b_n\}$ монотонно убывает и ограничена снизу (например, $a_1$). 
+Следовательно, существуют пределы:
+\[
+a = \lim_{n \to \infty} a_n, \quad b = \lim_{n \to \infty} b_n.
+\]
+
+Переходя к пределу в неравенстве $a_n \leq b_n$, получаем:
+\[
+a \leq b.
+\]
+
+Рассмотрим разность $b - a$. 
+Из неравенств $a_n \leq a$ и $b \leq b_n$ следует:
+\[
+b - a \leq b_n - a_n \quad \forall n.
+\]
+
+Переходя к пределу при $n \to \infty$, получаем:
+\[
+0 \leq b - a \leq \lim_{n \to \infty} (b_n - a_n) = 0.
+\]
+
+Следовательно, $b - a = 0$, то есть $a = b$. Обозначим эту общую точку через $c = a = b$.
+
+Докажем, что $c \in [a_n, b_n]$ для всех $n$. 
+Из монотонности и пределов:
+\[
+a_n \leq \lim_{n \to \infty} a_n = c = \lim_{n \to \infty} b_n \leq b_n.
+\]
+Таким образом, $c$ принадлежит всем отрезкам.
+
+2) Единственность:
+
+Предположим, существует ещё одна точка $c_0 \in [a_n, b_n]$ для всех $n$. 
+Тогда для любого $n$ выполняется:
+\[
+|c_0 - c| \leq b_n - a_n.
+\]
+
+Переходя к пределу при $n \to \infty$, получаем:
+\[
+|c_0 - c| \leq \lim_{n \to \infty} (b_n - a_n) = 0.
+\]
+
+Следовательно, $c_0 = c$, что доказывает единственность точки пересечения.
+\end{proof}
+
+\begin{remark}
+Теорема Кантора о вложенных отрезках является одной из эквивалентных формулировок полноты множества действительных чисел.
+\end{remark}
+
+\section*{Билет 11. Критерий Коши (необходимость)}
+
+\begin{definition}
+Последовательность $\{x_n\}$ называется \textbf{фундаментальной} (сходящейся в себе), если:
+\[
+\forall \varepsilon > 0 \; \exists N \; \forall n, m > N : |x_n - x_m| < \varepsilon.
+\]
+\end{definition}
+
+\begin{theorem}[необходимость]
+Если последовательность $\{x_n\}$ сходится, то она фундаментальна.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $x_n \to a$. Возьмём $\varepsilon > 0$. Существует $N$ такой, что для всех $n > N$ выполнено $|x_n - a| < \frac{\varepsilon}{2}$. Тогда для любых $n, m > N$:
+\[
+|x_n - x_m| \leq |x_n - a| + |a - x_m| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+\]
+\end{proofnote}
+
+\section*{Билет 12. Критерий Коши (достаточность)}
+
+\begin{theorem}
+В $\mathbb{R}^m$ всякая фундаментальная последовательность сходится.
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Фундаментальная последовательность ограничена (лемма 6, § 3).
+    \item По принципу Больцано–Вейерштрасса из неё можно выделить сходящуюся подпоследовательность $x_{n_k} \to a$.
+    \item Покажем, что вся последовательность $x_n \to a$. Возьмём $\varepsilon > 0$. Так как $\{x_n\}$ фундаментальна, существует $N_1$ такой, что $|x_n - x_m| < \frac{\varepsilon}{2}$ для всех $n, m > N_1$. Так как $x_{n_k} \to a$, существует $K$ такой, что $|x_{n_k} - a| < \frac{\varepsilon}{2}$ для всех $k > K$. Выберем $k$ так, чтобы $n_k > \max(N_1, K)$. Тогда для любого $n > N_1$:
+    \[
+    |x_n - a| \leq |x_n - x_{n_k}| + |x_{n_k} - a| < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 13. Бесконечные пределы, бесконечно большие и малые последовательности}
+
+\begin{definition}
+\begin{itemize}
+    \item $\lim x_n = +\infty$, если $\forall E > 0 \; \exists N \; \forall n > N : x_n > E$.
+    \item $\lim x_n = -\infty$, если $\forall E > 0 \; \exists N \; \forall n > N : x_n < -E$.
+    \item $\lim x_n = \infty$, если $\forall E > 0 \; \exists N \; \forall n > N : |x_n| > E$.
+    \item Последовательность $\{x_n\}$ называется \textbf{бесконечно малой}, если $\lim x_n = 0$.
+    \item Последовательность $\{x_n\}$ называется \textbf{бесконечно большой}, если $\lim x_n = \infty$ (или $\pm\infty$).
+\end{itemize}
+\end{definition}
+
+\textbf{Связь.} Если $x_n \neq 0$, то $\{x_n\}$ бесконечно большая $\iff$ $\left\{ \frac{1}{x_n} \right\}$ бесконечно малая.
+
+\section*{Билет 14. Число e, последовательность $y_n = \left(1 + \frac{1}{n}\right)^{n+1}$. Конспект \href{https://tagirgaraev.notion.site/20-e-586470cd451f441ba8263cebbc537cda}{ТП}}
+
+\begin{theorem}
+Последовательность $y_n = \left(1 + \frac{1}{n}\right)^{n+1}$ убывает и ограничена снизу.
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Ограниченность: $y_n > 1$.
+    \item Убывание: Рассмотрим отношение:
+    \[
+    \frac{y_{n-1}}{y_n} = \frac{\left(1+\frac{1}{n-1}\right)^n}{\left(1+\frac{1}{n}\right)^{n+1}} = \frac{\left(\frac{n}{n-1}\right)^n}{\left(\frac{n+1}{n}\right)^{n+1}}.
+    \]
+    Используя неравенство Бернулли $(1+x)^r \geq 1+rx$ при $x > -1$, получаем:
+    \[
+    \left(1 + \frac{1}{n^2-1}\right)^{n+1} \geq 1 + \frac{n+1}{n^2-1}.
+    \]
+    После преобразований получаем $\frac{y_{n-1}}{y_n} \geq 1$, т.е. $y_{n-1} \geq y_n$.
+\end{enumerate}
+
+Следовательно, $y_n$ сходится, и $\lim y_n = \lim \left(1+\frac{1}{n}\right)^n \cdot \lim \left(1+\frac{1}{n}\right) = e \cdot 1 = e$.
+\end{proofnote}
+
+\section*{Билет 15. Число e, последовательность $x_n = \left(1 + \frac{1}{n}\right)^n$.
+Конспект \href{https://tagirgaraev.notion.site/20-e-586470cd451f441ba8263cebbc537cda}{ТП}}
+
+\begin{theorem}
+Последовательность $x_n = \left(1 + \frac{1}{n}\right)^n$ возрастает и ограничена сверху, её предел обозначается через $e$.
+\end{theorem}
+
+\begin{proofnote}
+Из предыдущего билета $y_n = x_n \cdot \left(1+\frac{1}{n}\right)$ убывает. Так как $x_n = \frac{y_n}{1+\frac{1}{n}}$, а $1+\frac{1}{n} \to 1$, то $x_n$ сходится к тому же пределу $e$. 
+
+Можно также доказать возрастание $x_n$ непосредственно через неравенство Бернулли.
+\end{proofnote}
+
+\begin{definition}
+\[
+e = \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n.
+\]
+\end{definition}
+
+\section*{Билет 16. Предел в терминах окрестностей; подпоследовательности.
+Конспект \href{https://tagirgaraev.notion.site/22-711f4c363c1a42bbace4ac75550b7c6c}{ТП}}
+
+\begin{definition}[предела в терминах окрестностей]
+$\lim x_n = a$, если для любой окрестности $V_a$ точки $a$ существует $N$ такой, что $x_n \in V_a$ для всех $n > N$.
+\end{definition}
+
+\begin{definition}[подпоследовательности]
+Пусть $\{n_k\}$ — строго возрастающая последовательность натуральных чисел. Тогда $\{x_{n_k}\}$ называется \textbf{подпоследовательностью} последовательности $\{x_n\}$.
+\end{definition}
+
+\begin{theorem}
+Если $x_n \to a$, то любая подпоследовательность $x_{n_k} \to a$.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $V_a$ — окрестность $a$. Существует $N$ такой, что $x_n \in V_a$ для всех $n > N$. Так как $n_k \to \infty$, найдётся $K$ такой, что $n_k > N$ для всех $k > K$. Тогда $x_{n_k} \in V_a$ для всех $k > K$.
+\end{proofnote}
+
+\section*{Билет 17. Принцип выбора Больцано–Вейерштрасса.
+Конспект \href{https://tagirgaraev.notion.site/22-711f4c363c1a42bbace4ac75550b7c6c}{ТП}}
+
+\begin{theorem}
+Из всякой ограниченной последовательности в $\mathbb{R}^m$ можно выделить сходящуюся подпоследовательность.
+\end{theorem}
+
+\begin{proofnote}
+Пусть последовательность $\{x^{(n)}\}$ ограничена. Тогда все её точки содержатся в некотором замкнутом кубе $I$. Куб $I$ компактен в $\mathbb{R}^m$ (по теореме Гейне–Бореля). В компакте из любой последовательности можно выделить сходящуюся подпоследовательность (свойство секвенциальной компактности).
+\end{proofnote}
+
+\section*{Билет 18. Точка сгущения; последовательность, стремящаяся к точке сгущения.
+Конспект \href{https://tagirgaraev.notion.site/26-b09738767b8a4f53bd4765cb4045ffcb}{ТП 1} \href{https://tagirgaraev.notion.site/27-a687e7c0c8e6484783c165af5c6898db}{ТП 2}}
+
+\begin{definition}
+Точка $a$ называется \textbf{точкой сгущения} (предельной точкой) множества $D$, если в любой проколотой окрестности $\dot{V}_a$ содержится хотя бы одна точка из $D$.
+\end{definition}
+
+\begin{theorem}
+Точка $a$ является точкой сгущения множества $D$ тогда и только тогда, когда существует последовательность $\{x_n\} \subset D$, $x_n \neq a$, такая, что $x_n \to a$.
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item $\Rightarrow$: Для каждого $n$ возьмём проколотую окрестность $\dot{V}_a\left(\frac{1}{n}\right)$. В ней найдётся $x_n \in D$, $x_n \neq a$. По построению $x_n \to a$.
+    \item $\Leftarrow$: Если $x_n \to a$, то в любой проколотой окрестности $\dot{V}_a$ лежат почти все члены последовательности, т.е. точки из $D$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 19. Предел функции в терминах окрестностей и в терминах $\varepsilon$–$\delta$. Конспект \href{https://tagirgaraev.notion.site/28-d3b8c1558ab8484aae44e39a3c0ec834}{ТП}}
+
+\begin{definition}[по Коши]
+Пусть $f: D \subset \mathbb{R} \to \mathbb{R}$, $a$ — предельная точка $D$. Число $A$ называется \textbf{пределом функции} $f$ при $x \to a$, если:
+\[
+\forall \varepsilon > 0 \; \exists \delta > 0 \; \forall x \in D : 0 < |x - a| < \delta \Rightarrow |f(x) - A| < \varepsilon.
+\]
+Обозначение: $\lim\limits_{x \to a} f(x) = A$.
+\end{definition}
+
+\begin{definition}[по Гейне]
+$\lim\limits_{x \to a} f(x) = A$, если для любой последовательности $\{x_n\} \subset D$, $x_n \neq a$, $x_n \to a$, выполняется $f(x_n) \to A$.
+\end{definition}
+
+\textbf{Эквивалентность} определений доказывается стандартно.
+
+\section*{Билет 20. Теорема о пределе функции и пределах последовательностей}
+
+\begin{theorem}
+Пусть $a$ — предельная точка $D$. Тогда следующие утверждения равносильны:
+\begin{enumerate}
+    \item $\lim\limits_{x \to a} f(x) = A$ (по Коши).
+    \item Для любой последовательность $\{x_n\} \subset D$, $x_n \neq a$, $x_n \to a$, выполнено $\lim f(x_n) = A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item $1 \to 2$: Пусть выполнено определение по Коши. Возьмём $\{x_n\} \to a$, $x_n \neq a$. Для $\varepsilon > 0$ найдём $\delta > 0$ из определения Коши. Для этого $\delta$ найдётся $N$ такой, что для всех $n > N$ выполнено $0 < |x_n - a| < \delta$. Тогда $|f(x_n) - A| < \varepsilon$. Значит, $f(x_n) \to A$.
+    \item $2 \to 1$: Допустим, что определение по Коши не выполнено. Тогда:
+    \[
+    \exists \varepsilon > 0 \; \forall \delta > 0 \; \exists x \in D : 0 < |x - a| < \delta \text{ и } |f(x) - A| \geq \varepsilon.
+    \]
+    Возьмём $\delta_n = \frac{1}{n}$ и выберем $x_n$ соответственно. Тогда $x_n \to a$, $x_n \neq a$, но $|f(x_n) - A| \geq \varepsilon$, противоречие.
+\end{enumerate}
+\end{proofnote}
+
+% Продолжение с билета 21
+\section*{Билет 21. Единственность предела функций; $\lim c$; $\lim cf$; $\lim(f + g)$}
+
+\begin{definition}[Предел функции по Коши]
+Пусть $f: D \subset \R \to \R$, $a$ — предельная точка $D$, $A \in \R$. Говорят, что
+\[
+\lim_{x \to a} f(x) = A,
+\]
+если
+\[
+\forall \eps > 0 \; \exists \delta > 0 \; \forall x \in D: \; 0 < |x - a| < \delta \Rightarrow |f(x) - A| < \eps.
+\]
+\end{definition}
+
+\begin{theorem}[Единственность предела функции]
+Если $\lim\limits_{x \to a} f(x) = A$ и $\lim\limits_{x \to a} f(x) = B$, то $A = B$.
+\end{theorem}
+
+\begin{proofnote}
+Предположим противное: $A \neq B$. Пусть $\eps = \frac{|A - B|}{2} > 0$.
+По определению предела:
+\begin{itemize}
+    \item $\exists \delta_1 > 0: \; 0 < |x - a| < \delta_1 \Rightarrow |f(x) - A| < \eps$,
+    \item $\exists \delta_2 > 0: \; 0 < |x - a| < \delta_2 \Rightarrow |f(x) - B| < \eps$.
+\end{itemize}
+Возьмём $\delta = \min(\delta_1, \delta_2)$. Для любого $x$, удовлетворяющего $0 < |x - a| < \delta$, имеем:
+\[
+|A - B| \leq |A - f(x)| + |f(x) - B| < \eps + \eps = |A - B|,
+\]
+что противоречит выбору $\eps$. Следовательно, $A = B$.
+\end{proofnote}
+
+\begin{theorem}[Предел постоянной функции]
+Пусть $f(x) = c$ для всех $x \in D$. Тогда
+\[
+\lim_{x \to a} f(x) = c.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Для любого $\eps > 0$ возьмём любое $\delta > 0$. Тогда при $0 < |x - a| < \delta$:
+\[
+|f(x) - c| = |c - c| = 0 < \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Предел произведения функции на константу]
+Если $\lim\limits_{x \to a} f(x) = A$, то для любой константы $c \in \R$:
+\[
+\lim_{x \to a} (c f(x)) = c A.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Если $c = 0$, утверждение очевидно. Пусть $c \neq 0$.
+Для $\eps > 0$ найдём $\delta > 0$ такое, что при $0 < |x - a| < \delta$:
+\[
+|f(x) - A| < \frac{\eps}{|c|}.
+\]
+Тогда:
+\[
+|c f(x) - c A| = |c| \cdot |f(x) - A| < |c| \cdot \frac{\eps}{|c|} = \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Предел суммы функций]
+Если $\lim\limits_{x \to a} f(x) = A$ и $\lim\limits_{x \to a} g(x) = B$, то:
+\[
+\lim_{x \to a} (f(x) + g(x)) = A + B.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Для $\eps > 0$ найдём $\delta_1, \delta_2 > 0$:
+\begin{itemize}
+    \item $0 < |x - a| < \delta_1 \Rightarrow |f(x) - A| < \frac{\eps}{2}$,
+    \item $0 < |x - a| < \delta_2 \Rightarrow |g(x) - B| < \frac{\eps}{2}$.
+\end{itemize}
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда при $0 < |x - a| < \delta$:
+\[
+|(f(x) + g(x)) - (A + B)| \leq |f(x) - A| + |g(x) - B| < \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 22. $\lim fg$; $\lim 1/f$; $\lim g/f$}
+
+\begin{theorem}[Предел произведения функций]
+Если $\lim\limits_{x \to a} f(x) = A$ и $\lim\limits_{x \to a} g(x) = B$, то:
+\[
+\lim_{x \to a} (f(x) g(x)) = A B.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Запишем:
+\[
+f(x) g(x) - A B = f(x) (g(x) - B) + B (f(x) - A).
+\]
+Поскольку $f(x)$ имеет предел, она ограничена в некоторой проколотой окрестности: $|f(x)| \leq M$.
+Для $\eps > 0$ найдём $\delta_1, \delta_2 > 0$:
+\begin{itemize}
+    \item $0 < |x - a| < \delta_1 \Rightarrow |f(x) - A| < \frac{\eps}{2(|B| + 1)}$,
+    \item $0 < |x - a| < \delta_2 \Rightarrow |g(x) - B| < \frac{\eps}{2M}$.
+\end{itemize}
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда:
+\[
+|f(x) g(x) - A B| \leq |f(x)| \cdot |g(x) - B| + |B| \cdot |f(x) - A| < M \cdot \frac{\eps}{2M} + |B| \cdot \frac{\eps}{2(|B| + 1)} < \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Предел обратной функции]
+Если $\lim\limits_{x \to a} f(x) = A \neq 0$, то:
+\[
+\lim_{x \to a} \frac{1}{f(x)} = \frac{1}{A}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Пусть $\eps > 0$. Выберем $\delta_1 > 0$ так, чтобы $|f(x) - A| < \frac{|A|}{2}$ при $0 < |x - a| < \delta_1$. Тогда:
+\[
+|f(x)| \geq |A| - |A - f(x)| > \frac{|A|}{2}.
+\]
+Теперь для $\eps > 0$ найдём $\delta_2 > 0$:
+\[
+0 < |x - a| < \delta_2 \Rightarrow |f(x) - A| < \frac{|A|^2 \eps}{2}.
+\]
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда:
+\[
+\left| \frac{1}{f(x)} - \frac{1}{A} \right| = \frac{|f(x) - A|}{|f(x)| |A|} < \frac{|f(x) - A|}{(|A|/2) |A|} = \frac{2 |f(x) - A|}{|A|^2} < \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Предел частного функций]
+Если $\lim\limits_{x \to a} f(x) = A$, $\lim\limits_{x \to a} g(x) = B \neq 0$, то:
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \frac{A}{B}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Применяем теоремы о пределе произведения и обратной функции:
+\[
+\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \left( f(x) \cdot \frac{1}{g(x)} \right) = A \cdot \frac{1}{B} = \frac{A}{B}.
+\]
+\end{proofnote}
+
+\section*{Билет 23. $\lim f$, $\lim g$ при $f(x) \leq g(x)$; $\lim f$, $\lim g$, $\lim h$ при $f(x) \leq g(x) \leq h(x)$}
+
+\begin{theorem}[Предельный переход в неравенстве]
+Пусть $f(x) \leq g(x)$ в некоторой проколотой окрестности точки $a$, и существуют конечные пределы:
+\[
+\lim_{x \to a} f(x) = A, \quad \lim_{x \to a} g(x) = B.
+\]
+Тогда $A \leq B$.
+\end{theorem}
+
+\begin{proofnote}
+Предположим противное: $A > B$. Возьмём $\eps = \frac{A - B}{2} > 0$.
+Найдём $\delta > 0$ такое, что при $0 < |x - a| < \delta$:
+\[
+|f(x) - A| < \eps, \quad |g(x) - B| < \eps.
+\]
+Тогда:
+\[
+f(x) > A - \eps = \frac{A + B}{2}, \quad g(x) < B + \eps = \frac{A + B}{2},
+\]
+откуда $f(x) > g(x)$, что противоречит условию.
+\end{proofnote}
+
+\begin{theorem}[Теорема о сжатой функции]
+Пусть в некоторой проколотой окрестности точки $a$:
+\[
+f(x) \leq g(x) \leq h(x),
+\]
+и
+\[
+\lim_{x \to a} f(x) = \lim_{x \to a} h(x) = A.
+\]
+Тогда $\lim\limits_{x \to a} g(x) = A$.
+\end{theorem}
+
+\begin{proofnote}
+Для $\eps > 0$ найдём $\delta > 0$ такое, что при $0 < |x - a| < \delta$:
+\[
+|f(x) - A| < \eps, \quad |h(x) - A| < \eps.
+\]
+Тогда:
+\[
+A - \eps < f(x) \leq g(x) \leq h(x) < A + \eps,
+\]
+следовательно, $|g(x) - A| < \eps$.
+\end{proofnote}
+
+\section*{Билет 24. Предел монотонной функции}
+
+\begin{definition}
+Функция $f: \langle a, b \rangle \to \R$ называется:
+\begin{itemize}
+    \item возрастающей, если $x_1 < x_2 \Rightarrow f(x_1) \leq f(x_2)$,
+    \item строго возрастающей, если $x_1 < x_2 \Rightarrow f(x_1) < f(x_2)$,
+    \item убывающей, если $x_1 < x_2 \Rightarrow f(x_1) \geq f(x_2)$,
+    \item строго убывающей, если $x_1 < x_2 \Rightarrow f(x_1) > f(x_2)$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[О пределе монотонной функции]
+Пусть $f: \langle a, b \rangle \to \R$ возрастает и ограничена сверху. Тогда существует конечный предел:
+\[
+\lim_{x \to b^-} f(x) = \sup_{x \in \langle a, b \rangle} f(x).
+\]
+Аналогично, если $f$ убывает и ограничена снизу, то:
+\[
+\lim_{x \to b^-} f(x) = \inf_{x \in \langle a, b \rangle} f(x).
+\]
+\end{theorem}
+
+\begin{proofnote}
+Пусть $M = \sup\limits_{x \in \langle a, b \rangle} f(x)$. Для любого $\eps > 0$ найдётся $x_0 \in \langle a, b \rangle$ такое, что:
+\[
+f(x_0) > M - \eps.
+\]
+Тогда для всех $x \in (x_0, b)$ в силу возрастания:
+\[
+M - \eps < f(x_0) \leq f(x) \leq M.
+\]
+Положим $\delta = b - x_0$. Тогда при $0 < b - x < \delta$ (т.е. $x > x_0$) имеем:
+\[
+|f(x) - M| < \eps.
+\]
+Следовательно, $\lim\limits_{x \to b^-} f(x) = M$.
+\end{proofnote}
+
+\section*{Билет 25. Критерий Коши существования конечного предела функции (необходимость)}
+
+\begin{theorem}[Критерий Коши для функции]
+Пусть $f: D \subset \R \to \R$, $a$ — предельная точка $D$. Конечный предел $\lim\limits_{x \to a} f(x)$ существует тогда и только тогда, когда:
+\[
+\forall \eps > 0 \; \exists \delta > 0 \; \forall x_1, x_2 \in D: \; 0 < |x_1 - a| < \delta, \; 0 < |x_2 - a| < \delta \Rightarrow |f(x_1) - f(x_2)| < \eps.
+\]
+\end{theorem}
+
+\begin{theorem}[Необходимость условия Коши]
+Если существует конечный предел $\lim\limits_{x \to a} f(x) = A$, то выполняется условие Коши.
+\end{theorem}
+
+\begin{proofnote}
+Для $\eps > 0$ найдём $\delta > 0$ такое, что при $0 < |x - a| < \delta$:
+\[
+|f(x) - A| < \frac{\eps}{2}.
+\]
+Тогда для любых $x_1, x_2$, удовлетворяющих $0 < |x_1 - a| < \delta$, $0 < |x_2 - a| < \delta$:
+\[
+|f(x_1) - f(x_2)| \leq |f(x_1) - A| + |A - f(x_2)| < \frac{\eps}{2} + \frac{\eps}{2} = \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 26. Критерий Коши существования конечного предела функции (достаточность)}
+
+\begin{theorem}[Достаточность условия Коши]
+Если для функции $f$ выполняется условие Коши, то существует конечный предел $\lim\limits_{x \to a} f(x)$.
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Покажем, что $f$ ограничена в некоторой проколотой окрестности $a$.
+    Возьмём $\eps = 1$. Найдём $\delta_0 > 0$ такое, что для любых $x_1, x_2$ из проколотой $\delta_0$-окрестности:
+    \[
+    |f(x_1) - f(x_2)| < 1.
+    \]
+    Зафиксируем $x_0$ из этой окрестности. Тогда для любого $x$:
+    \[
+    |f(x)| \leq |f(x) - f(x_0)| + |f(x_0)| < 1 + |f(x_0)|.
+    \]
+    
+    \item Рассмотрим произвольную последовательность $\{x_n\} \subset D \setminus \{a\}$, $x_n \to a$.
+    Покажем, что $\{f(x_n)\}$ сходится.
+    Для $\eps > 0$ найдём $\delta > 0$ из условия Коши. Так как $x_n \to a$, найдётся $N$ такое, что при $n > N$:
+    \[
+    0 < |x_n - a| < \delta.
+    \]
+    Тогда для $n, m > N$:
+    \[
+    |f(x_n) - f(x_m)| < \eps.
+    \]
+    Значит, $\{f(x_n)\}$ — фундаментальная, следовательно, сходится.
+    
+    \item Покажем, что все такие последовательности сходятся к одному пределу.
+    Пусть $x_n \to a$, $y_n \to a$, $f(x_n) \to A$, $f(y_n) \to B$. Рассмотрим смешанную последовательность $z_{2n-1} = x_n$, $z_{2n} = y_n$. Тогда $z_n \to a$, и $\{f(z_n)\}$ сходится (по п.2). Отсюда $A = B$.
+    
+    \item По определению предела по Гейне, $\lim\limits_{x \to a} f(x) = A$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 27. Шкала бесконечно малых}
+
+\begin{definition}
+Функция $\alpha(x)$ называется бесконечно малой при $x \to a$, если:
+\[
+\lim_{x \to a} \alpha(x) = 0.
+\]
+\end{definition}
+
+\begin{definition}
+Говорят, что $\alpha(x) = o(\beta(x))$ при $x \to a$, если:
+\[
+\lim_{x \to a} \frac{\alpha(x)}{\beta(x)} = 0.
+\]
+\end{definition}
+
+\begin{theorem}[Шкала бесконечно малых при $x \to 0$]
+Для натуральных $n, m$:
+\begin{itemize}
+    \item $x^n = o(x^m)$ при $n > m$,
+    \item $\sin x \sim x$, $\tg x \sim x$, $\arcsin x \sim x$, $\arctg x \sim x$,
+    \item $1 - \cos x \sim \frac{x^2}{2}$,
+    \item $\ln(1 + x) \sim x$,
+    \item $e^x - 1 \sim x$,
+    \item $(1 + x)^\alpha - 1 \sim \alpha x$.
+\end{itemize}
+\end{theorem}
+
+\section*{Билет 28. Существование неравенства для $\ln(1+x)$}
+
+\begin{theorem}
+Для любого $x > -1$, $x \neq 0$, верно неравенство:
+\[
+\frac{x}{1+x} < \ln(1+x) < x.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Рассмотрим функцию $f(t) = \ln(1+t)$. По формуле Лагранжа на отрезке $[0, x]$ (при $x > 0$):
+\[
+\ln(1+x) = \ln(1) + \frac{1}{1+\theta x} \cdot x, \quad \theta \in (0,1).
+\]
+Так как $1 < 1+\theta x < 1+x$, то:
+\[
+\frac{x}{1+x} < \ln(1+x) < x.
+\]
+Для $x \in (-1, 0)$ аналогично на отрезке $[x, 0]$:
+\[
+\ln(1+x) = \ln(1) + \frac{1}{1+\theta x} \cdot x, \quad \theta \in (0,1),
+\]
+и так как $1+x < 1+\theta x < 1$, то снова:
+\[
+\frac{x}{1+x} < \ln(1+x) < x.
+\]
+\end{proofnote}
+
+\section*{Билет 29. Существование неравенства для $e^x$}
+
+\begin{theorem}
+Для любого $x \neq 0$ верно неравенство:
+\[
+1 + x < e^x \quad \text{при } x > 0, \quad e^x < 1 + x \quad \text{при } x < 0.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Рассмотрим $f(t) = e^t$. По формуле Лагранжа на отрезке $[0, x]$ (при $x > 0$):
+\[
+e^x = 1 + e^{\theta x} \cdot x, \quad \theta \in (0,1).
+\]
+Так как $e^{\theta x} > 1$, то $e^x > 1 + x$.
+При $x < 0$ на отрезке $[x, 0]$:
+\[
+1 = e^x + e^{\theta x} \cdot (-x), \quad \theta \in (0,1),
+\]
+откуда $e^x = 1 - e^{\theta x} \cdot |x| < 1 - |x| = 1 + x$.
+\end{proofnote}
+
+\section*{Билет 30. Существование неравенства для $(1+x)^{1/x}$}
+
+\begin{theorem}
+Для $x > 0$ верно:
+\[
+\left(1 + \frac{1}{x}\right)^x < e < \left(1 + \frac{1}{x}\right)^{x+1}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Из неравенства для логарифма (билет 28):
+\[
+\frac{1}{x+1} < \ln\left(1 + \frac{1}{x}\right) < \frac{1}{x}.
+\]
+Умножаем на $x > 0$:
+\[
+\frac{x}{x+1} < x \ln\left(1 + \frac{1}{x}\right) < 1.
+\]
+Экспонируем:
+\[
+e^{\frac{x}{x+1}} < \left(1 + \frac{1}{x}\right)^x < e.
+\]
+Так как $e^{\frac{x}{x+1}} = e^{1 - \frac{1}{x+1}} < e$, левое неравенство усилить нельзя.
+Для правого: умножим исходное неравенство на $x+1 > 0$:
+\[
+1 < (x+1) \ln\left(1 + \frac{1}{x}\right) < \frac{x+1}{x}.
+\]
+Экспонируем:
+\[
+e < \left(1 + \frac{1}{x}\right)^{x+1} < e^{\frac{x+1}{x}}.
+\]
+\end{proofnote}
+
+\section*{Билет 31. $\lim\limits_{x \to 0} \frac{\ln(1+x)}{x}$}
+
+\begin{theorem}
+\[
+\lim_{x \to 0} \frac{\ln(1+x)}{x} = 1.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Используем неравенство из билета 28:
+\[
+\frac{1}{1+x} < \frac{\ln(1+x)}{x} < 1 \quad \text{при } x > 0,
+\]
+\[
+1 < \frac{\ln(1+x)}{x} < \frac{1}{1+x} \quad \text{при } -1 < x < 0.
+\]
+По теореме о сжатой функции:
+\[
+\lim_{x \to 0} \frac{\ln(1+x)}{x} = 1.
+\]
+\end{proofnote}
+
+\section*{Билет 32. $\lim\limits_{x \to 0} \frac{e^x - 1}{x}$}
+
+\begin{theorem}
+\[
+\lim_{x \to 0} \frac{e^x - 1}{x} = 1.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Сделаем замену $y = e^x - 1$, тогда $x = \ln(1+y)$, $y \to 0$ при $x \to 0$.
+\[
+\frac{e^x - 1}{x} = \frac{y}{\ln(1+y)} \to \frac{1}{\lim\limits_{y \to 0} \frac{\ln(1+y)}{y}} = 1.
+\]
+\end{proofnote}
+
+\section*{Билет 33. $\lim\limits_{x \to 0} (1 + x)^{1/x}$}
+
+\begin{theorem}
+\[
+\lim_{x \to 0} (1 + x)^{1/x} = e.
+\]
+\end{theorem}
+
+\begin{proofnote}
+\[
+(1 + x)^{1/x} = e^{\frac{\ln(1+x)}{x}}.
+\]
+Так как $\frac{\ln(1+x)}{x} \to 1$ (билет 31), по непрерывности экспоненты:
+\[
+\lim_{x \to 0} e^{\frac{\ln(1+x)}{x}} = e^1 = e.
+\]
+\end{proofnote}
+
+\section*{Билет 34. $\lim\limits_{x \to 0} (1 + x)^r$}
+
+\begin{theorem}
+Для любого $r \in \R$:
+\[
+\lim_{x \to 0} (1 + x)^r = 1.
+\]
+\end{theorem}
+
+\begin{proofnote}
+\[
+(1 + x)^r = e^{r \ln(1+x)}.
+\]
+Так как $\ln(1+x) \to 0$, то $r \ln(1+x) \to 0$, и по непрерывности экспоненты:
+\[
+\lim_{x \to 0} e^{r \ln(1+x)} = e^0 = 1.
+\]
+\end{proofnote}
+
+\section*{Билет 35. $\lim\limits_{x \to 0} \frac{\sin x}{x}$}
+
+\begin{theorem}
+\[
+\lim_{x \to 0} \frac{\sin x}{x} = 1.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Для $x \in (0, \pi/2)$ имеем (см. геометрическое построение):
+\[
+\sin x < x < \tg x.
+\]
+Делим на $\sin x > 0$:
+\[
+1 < \frac{x}{\sin x} < \frac{1}{\cos x}.
+\]
+Переворачиваем:
+\[
+\cos x < \frac{\sin x}{x} < 1.
+\]
+Так как $\cos x \to 1$ при $x \to 0$, по теореме о сжатой функции:
+\[
+\lim_{x \to 0} \frac{\sin x}{x} = 1.
+\]
+Для $x < 0$ замена $y = -x$ даёт тот же результат.
+\end{proofnote}
+
+\section*{Билет 36. Непрерывность функции в точке; арифметические операции над непрерывными функциями}
+
+\begin{definition}[Непрерывность в точке по Коши]
+Функция $f: D \subset \R \to \R$ непрерывна в точке $a \in D$, если:
+\[
+\forall \eps > 0 \; \exists \delta > 0 \; \forall x \in D: \; |x - a| < \delta \Rightarrow |f(x) - f(a)| < \eps.
+\]
+\end{definition}
+
+\begin{theorem}[Сумма непрерывных функций]
+Если $f$ и $g$ непрерывны в точке $a$, то $f + g$ также непрерывна в $a$.
+\end{theorem}
+
+\begin{proofnote}
+Для $\eps > 0$ найдём $\delta_1, \delta_2 > 0$:
+\begin{itemize}
+    \item $|x - a| < \delta_1 \Rightarrow |f(x) - f(a)| < \frac{\eps}{2}$,
+    \item $|x - a| < \delta_2 \Rightarrow |g(x) - g(a)| < \frac{\eps}{2}$.
+\end{itemize}
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда:
+\[
+|(f+g)(x) - (f+g)(a)| \leq |f(x) - f(a)| + |g(x) - g(a)| < \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Произведение непрерывных функций]
+Если $f$ и $g$ непрерывны в точке $a$, то $f \cdot g$ непрерывна в $a$.
+\end{theorem}
+
+\begin{proofnote}
+Используем представление:
+\[
+f(x)g(x) - f(a)g(a) = f(x)(g(x) - g(a)) + g(a)(f(x) - f(a)).
+\]
+Так как $f$ непрерывна, она ограничена в окрестности $a$: $|f(x)| \leq M$.
+Для $\eps > 0$ найдём $\delta_1, \delta_2 > 0$:
+\begin{itemize}
+    \item $|x - a| < \delta_1 \Rightarrow |f(x) - f(a)| < \frac{\eps}{2(|g(a)| + 1)}$,
+    \item $|x - a| < \delta_2 \Rightarrow |g(x) - g(a)| < \frac{\eps}{2M}$.
+\end{itemize}
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда:
+\[
+|f(x)g(x) - f(a)g(a)| < M \cdot \frac{\eps}{2M} + |g(a)| \cdot \frac{\eps}{2(|g(a)| + 1)} < \eps.
+\]
+\end{proofnote}
+
+\begin{theorem}[Частное непрерывных функций]
+Если $f$ и $g$ непрерывны в точке $a$ и $g(a) \neq 0$, то $\frac{f}{g}$ непрерывна в $a$.
+\end{theorem}
+
+\begin{proofnote}
+Сначала покажем, что $\frac{1}{g}$ непрерывна в $a$.
+Для $\eps > 0$ выберем $\delta_1 > 0$ так, чтобы $|g(x) - g(a)| < \frac{|g(a)|}{2}$ при $|x - a| < \delta_1$. Тогда:
+\[
+|g(x)| \geq |g(a)| - |g(a) - g(x)| > \frac{|g(a)|}{2}.
+\]
+Теперь для $\eps > 0$ найдём $\delta_2 > 0$:
+\[
+|x - a| < \delta_2 \Rightarrow |g(x) - g(a)| < \frac{|g(a)|^2 \eps}{2}.
+\]
+Пусть $\delta = \min(\delta_1, \delta_2)$. Тогда:
+\[
+\left| \frac{1}{g(x)} - \frac{1}{g(a)} \right| = \frac{|g(x) - g(a)|}{|g(x)| |g(a)|} < \frac{|g(x) - g(a)|}{(|g(a)|/2) |g(a)|} = \frac{2 |g(x) - g(a)|}{|g(a)|^2} < \eps.
+\]
+Теперь $\frac{f}{g} = f \cdot \frac{1}{g}$ непрерывна как произведение непрерывных.
+\end{proofnote}
+
+\section*{Билет 37. Односторонняя непрерывность функции; Классификация разрывов}
+
+\begin{definition}[Односторонняя непрерывность]
+Функция $f: D \subset \R \to \R$ непрерывна \textbf{слева} в точке $a \in D$, если:
+\[
+\lim_{x \to a^-} f(x) = f(a).
+\]
+Аналогично определяется непрерывность \textbf{справа}.
+\end{definition}
+
+\begin{definition}[Точка разрыва]
+Точка $a$ называется точкой разрыва функции $f$, если $f$ не является непрерывной в $a$.
+\end{definition}
+
+\begin{theorem}[Классификация разрывов]
+\begin{enumerate}
+    \item \textbf{Устранимый разрыв}: существуют конечные односторонние пределы $f(a^-) = f(a^+)$, но не равны $f(a)$ (или $f(a)$ не определено).
+    \item \textbf{Разрыв первого рода (скачок)}: существуют конечные односторонние пределы $f(a^-)$ и $f(a^+)$, но они не равны.
+    \item \textbf{Разрыв второго рода}: хотя бы один из односторонних пределов бесконечен или не существует.
+\end{enumerate}
+\end{theorem}
+
+\section*{Билет 38. Непрерывность и разрывы монотонной функции}
+
+\begin{theorem}
+Пусть $f: \langle a, b \rangle \to \R$ монотонна. Тогда:
+\begin{enumerate}
+    \item $f$ не может иметь разрывов второго рода.
+    \item В каждой точке $x_0 \in (a, b)$ существуют конечные пределы:
+    \[
+    f(x_0^-) = \lim_{x \to x_0^-} f(x), \quad f(x_0^+) = \lim_{x \to x_0^+} f(x),
+    \]
+    причём $f(x_0^-) \leq f(x_0) \leq f(x_0^+)$ (для возрастающей).
+    \item $f$ непрерывна в точке $x_0$ тогда и только тогда, когда $f(x_0^-) = f(x_0) = f(x_0^+)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+Пусть $f$ возрастает. Для $x_0 \in (a, b)$ множество $f(x)$ при $x < x_0$ ограничено сверху $f(x_0)$. По теореме о пределе монотонной функции (билет 24) существует конечный предел $f(x_0^-) = \sup_{x < x_0} f(x)$. Аналогично, $f(x_0^+) = \inf_{x > x_0} f(x)$.
+Так как $f$ возрастает, $f(x_0^-) \leq f(x_0) \leq f(x_0^+)$.
+Если $f(x_0^-) = f(x_0) = f(x_0^+)$, то $f$ непрерывна в $x_0$.
+Если же $f(x_0^-) < f(x_0)$ или $f(x_0) < f(x_0^+)$, то это разрыв первого рода.
+\end{proofnote}
+
+\section*{Билет 39. Непрерывность суперпозиции непрерывных функций}
+
+\begin{theorem}
+Если $f: D \subset \R \to \R$ непрерывна в точке $a \in D$, а $g: E \subset \R \to \R$ непрерывна в точке $f(a) \in E$, и $f(D) \subset E$, то композиция $g \circ f$ непрерывна в точке $a$.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $\eps > 0$. Так как $g$ непрерывна в $f(a)$, найдём $\delta_1 > 0$:
+\[
+|y - f(a)| < \delta_1 \Rightarrow |g(y) - g(f(a))| < \eps.
+\]
+Так как $f$ непрерывна в $a$, для $\delta_1 > 0$ найдём $\delta > 0$:
+\[
+|x - a| < \delta \Rightarrow |f(x) - f(a)| < \delta_1.
+\]
+Тогда:
+\[
+|g(f(x)) - g(f(a))| < \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 40. Непрерывность $\ln x$}
+
+\begin{theorem}
+Функция $\ln x$ непрерывна на $(0, +\infty)$.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $a > 0$. Для любого $\eps > 0$ найдём $\delta > 0$ такое, что при $|x - a| < \delta$:
+\[
+|\ln x - \ln a| < \eps.
+\]
+Заметим, что:
+\[
+|\ln x - \ln a| = \left| \ln \frac{x}{a} \right|.
+\]
+Потребуем, чтобы:
+\[
+e^{-\eps} < \frac{x}{a} < e^{\eps}.
+\]
+Тогда:
+\[
+a(e^{-\eps} - 1) < x - a < a(e^{\eps} - 1).
+\]
+Выберем $\delta = a \min(1 - e^{-\eps}, e^{\eps} - 1)$. Тогда при $|x - a| < \delta$:
+\[
+|\ln x - \ln a| < \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 41. Непрерывность $e^x$}
+
+\begin{theorem}
+Функция $e^x$ непрерывна на $\R$.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $a \in \R$. Для $\eps > 0$ найдём $\delta > 0$ такое, что при $|x - a| < \delta$:
+\[
+|e^x - e^a| < \eps.
+\]
+Заметим, что:
+\[
+|e^x - e^a| = e^a |e^{x-a} - 1|.
+\]
+Из непрерывности $e^t$ в нуле: найдём $\delta_1 > 0$:
+\[
+|t| < \delta_1 \Rightarrow |e^t - 1| < \frac{\eps}{e^a}.
+\]
+Положим $\delta = \delta_1$. Тогда при $|x - a| < \delta$:
+\[
+|e^x - e^a| < e^a \cdot \frac{\eps}{e^a} = \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 42. Непрерывность $x^r$}
+
+\begin{theorem}
+Степенная функция $x^r$ непрерывна на своей области определения:
+\begin{itemize}
+    \item $(0, +\infty)$ при любом $r \in \R$,
+    \item $[0, +\infty)$ при $r > 0$,
+    \item $\R \setminus \{0\}$ при $r$ целом отрицательном и т.д.
+\end{itemize}
+\end{theorem}
+
+\begin{proofnote}
+Запишем:
+\[
+x^r = e^{r \ln x}.
+\]
+Так как $\ln x$ непрерывен на $(0, +\infty)$ (билет 40), а экспонента непрерывна на $\R$ (билет 41), композиция $e^{r \ln x}$ непрерывна на $(0, +\infty)$.
+При $r > 0$ докажем непрерывность в нуле справа:
+Пусть $x_n \to 0+$. Тогда $\ln x_n \to -\infty$, $r \ln x_n \to -\infty$, $e^{r \ln x_n} \to 0 = 0^r$.
+\end{proofnote}
+
+\section*{Билет 43. Непрерывность $\sin x$}
+
+\begin{theorem}
+Функция $\sin x$ непрерывна на $\R$.
+\end{theorem}
+
+\begin{proofnote}
+Используем формулу разности синусов:
+\[
+|\sin x - \sin a| = \left| 2 \sin \frac{x - a}{2} \cos \frac{x + a}{2} \right| \leq 2 \left| \sin \frac{x - a}{2} \right| \leq |x - a|.
+\]
+Для $\eps > 0$ возьмём $\delta = \eps$. Тогда при $|x - a| < \delta$:
+\[
+|\sin x - \sin a| \leq |x - a| < \eps.
+\]
+\end{proofnote}
+
+\section*{Билет 44. Непрерывность $\cos x$, $\tg x$, $\ctg x$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $\cos x$ непрерывен на $\R$.
+    \item $\tg x = \frac{\sin x}{\cos x}$ непрерывен на $\R \setminus \left\{ \frac{\pi}{2} + k\pi \right\}$.
+    \item $\ctg x = \frac{\cos x}{\sin x}$ непрерывен на $\R \setminus \{k\pi\}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item $\cos x = \sin\left(\frac{\pi}{2} - x\right)$ — композиция непрерывных.
+    \item $\tg x$ — частное непрерывных функций, знаменатель не обращается в ноль в указанных точках.
+    \item Аналогично для $\ctg x$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 45. Теорема об отображении отрезка}
+
+\begin{theorem}[Вейерштрасс]
+Если функция $f$ непрерывна на отрезке $[a, b]$, то её образ $f([a, b])$ является отрезком.
+\end{theorem}
+
+\begin{proofnote}
+По теореме Вейерштрасса $f$ ограничена на $[a, b]$.
+Пусть $m = \inf\limits_{[a,b]} f(x)$, $M = \sup\limits_{[a,b]} f(x)$.
+По теореме Больцано–Коши (билет 47) для любого $y \in [m, M]$ найдётся $c \in [a, b]$ такое, что $f(c) = y$.
+Следовательно, $f([a, b]) = [m, M]$.
+\end{proofnote}
+
+\section*{Билет 46. Теорема об обращении непрерывной функции в ноль}
+
+\begin{theorem}[Больцано–Коши, первая форма]
+Если $f$ непрерывна на $[a, b]$ и $f(a) \cdot f(b) < 0$, то существует точка $c \in (a, b)$ такая, что $f(c) = 0$.
+\end{theorem}
+
+\begin{proofnote}
+Метод половинного деления.
+Положим $a_0 = a, b_0 = b$.
+На каждом шаге $n$ рассматриваем середину $c_n = \frac{a_n + b_n}{2}$.
+Если $f(c_n) = 0$, доказано.
+Иначе выбираем $[a_{n+1}, b_{n+1}]$ так, чтобы $f(a_{n+1}) \cdot f(b_{n+1}) < 0$.
+Получаем последовательность вложенных отрезков, длина которых стремится к нулю.
+По теореме Кантора существует единственная точка $c$, принадлежащая всем отрезкам.
+По непрерывности $f(c) = 0$.
+\end{proofnote}
+
+\section*{Билет 47. Теорема о промежуточном значении}
+
+\begin{theorem}[Больцано–Коши]
+Если $f$ непрерывна на $[a, b]$, то для любого числа $C$ между $f(a)$ и $f(b)$ найдётся точка $c \in (a, b)$ такая, что $f(c) = C$.
+\end{theorem}
+
+\begin{proofnote}
+Рассмотрим функцию $g(x) = f(x) - C$.
+Тогда $g(a) \cdot g(b) < 0$.
+По теореме билета 46 найдётся $c \in (a, b)$: $g(c) = 0$, т.е. $f(c) = C$.
+\end{proofnote}
+
+\section*{Билет 48. Существование обратной непрерывной функции}
+
+\begin{theorem}
+Пусть $f$ непрерывна и строго монотонна на промежутке $\langle a, b \rangle$.
+Тогда:
+\begin{enumerate}
+    \item $f$ обратима, $f^{-1}$ определена на промежутке $f(\langle a, b \rangle)$.
+    \item $f^{-1}$ строго монотонна того же типа.
+    \item $f^{-1}$ непрерывна.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Строгая монотонность обеспечивает обратимость.
+    \item Монотонность $f^{-1}$ следует из монотонности $f$.
+    \item Непрерывность $f^{-1}$ следует из теоремы о сохранении промежутка и теоремы о разрывах монотонной функции (билет 38).
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 49. Непрерывность $\arcsin x$, $\arccos x$, $\arctg x$, $\arcctg x$}
+
+\begin{theorem}
+Обратные тригонометрические функции непрерывны на своих областях определения:
+\begin{itemize}
+    \item $\arcsin x$ на $[-1, 1]$,
+    \item $\arccos x$ на $[-1, 1]$,
+    \item $\arctg x$ на $\R$,
+    \item $\arcctg x$ на $\R$.
+\end{itemize}
+\end{theorem}
+
+\begin{proofnote}
+Эти функции являются обратными к непрерывным строго монотонным функциям:
+\begin{itemize}
+    \item $\arcsin$ — обратная к $\sin$ на $[-\pi/2, \pi/2]$,
+    \item $\arccos$ — обратная к $\cos$ на $[0, \pi]$,
+    \item $\arctg$ — обратная к $\tg$ на $(-\pi/2, \pi/2)$,
+    \item $\arcctg$ — обратная к $\ctg$ на $(0, \pi)$.
+\end{itemize}
+По теореме билета 48 они непрерывны.
+\end{proofnote}
+
+\section*{Билет 50. Равномерная непрерывность функций; Теорема Кантора}
+
+\begin{definition}[Равномерная непрерывность]
+Функция $f: D \subset \R \to \R$ равномерно непрерывна на $D$, если:
+\[
+\forall \eps > 0 \; \exists \delta > 0 \; \forall x_1, x_2 \in D: \; |x_1 - x_2| < \delta \Rightarrow |f(x_1) - f(x_2)| < \eps.
+\]
+\end{definition}
+
+\begin{theorem}[Кантора]
+Если функция непрерывна на отрезке $[a, b]$, то она равномерно непрерывна на $[a, b]$.
+\end{theorem}
+
+\begin{proofnote}
+От противного. Пусть $f$ не равномерно непрерывна.
+Тогда $\exists \eps > 0$ такое, что $\forall \delta > 0$ найдутся $x, y \in [a, b]$: $|x - y| < \delta$, но $|f(x) - f(y)| \geq \eps$.
+Возьмём $\delta_n = \frac{1}{n}$. Получим последовательности $\{x_n\}, \{y_n\}$ такие, что $|x_n - y_n| < \frac{1}{n}$, но $|f(x_n) - f(y_n)| \geq \eps$.
+По теореме Больцано–Вейерштрасса выделим сходящуюся подпоследовательность $\{x_{n_k}\} \to c$.
+Тогда и $\{y_{n_k}\} \to c$.
+По непрерывности $f$ в точке $c$:
+\[
+|f(x_{n_k}) - f(y_{n_k})| \to |f(c) - f(c)| = 0,
+\]
+что противоречит условию $|f(x_{n_k}) - f(y_{n_k})| \geq \eps$.
+\end{proofnote}
+
+\section*{Билет 51. Определение производной и односторонней производной}
+
+\begin{definition}[Производная]
+Функция $f: \langle a, b \rangle \to \R$ имеет производную в точке $x_0 \in \langle a, b \rangle$, если существует конечный предел:
+\[
+f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} = \lim_{h \to 0} \frac{f(x_0 + h) - f(x_0)}{h}.
+\]
+\end{definition}
+
+\begin{definition}[Односторонняя производная]
+Правая производная:
+\[
+f'_+(x_0) = \lim_{h \to 0^+} \frac{f(x_0 + h) - f(x_0)}{h}.
+\]
+Левая производная:
+\[
+f'_-(x_0) = \lim_{h \to 0^-} \frac{f(x_0 + h) - f(x_0)}{h}.
+\]
+\end{definition}
+
+\section*{Билет 52. Дифференцируемость функции; связь дифференцируемости и существования производной}
+
+\begin{definition}[Дифференцируемость]
+Функция $f$ дифференцируема в точке $x_0$, если существует такое число $A$, что:
+\[
+f(x_0 + h) = f(x_0) + A h + o(h), \quad h \to 0.
+\]
+\end{definition}
+
+\begin{theorem}
+Функция дифференцируема в точке $x_0$ тогда и только тогда, когда существует конечная производная $f'(x_0)$, причём $A = f'(x_0)$.
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Если $f$ дифференцируема, то:
+    \[
+    \frac{f(x_0 + h) - f(x_0)}{h} = A + \frac{o(h)}{h} \to A.
+    \]
+    \item Если существует $f'(x_0)$, то:
+    \[
+    \frac{f(x_0 + h) - f(x_0)}{h} = f'(x_0) + \alpha(h), \quad \alpha(h) \to 0,
+    \]
+    откуда:
+    \[
+    f(x_0 + h) = f(x_0) + f'(x_0) h + \alpha(h) h.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 53. $(cf)'$, $(f + g)'$, $(fg)'$}
+
+\begin{theorem}
+Если $f$ и $g$ дифференцируемы в точке $x$, то:
+\begin{enumerate}
+    \item $(cf)'(x) = c f'(x)$,
+    \item $(f + g)'(x) = f'(x) + g'(x)$,
+    \item $(fg)'(x) = f'(x) g(x) + f(x) g'(x)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item \[
+    \frac{cf(x+h) - cf(x)}{h} = c \frac{f(x+h) - f(x)}{h} \to c f'(x).
+    \]
+    \item \[
+    \frac{(f+g)(x+h) - (f+g)(x)}{h} = \frac{f(x+h) - f(x)}{h} + \frac{g(x+h) - g(x)}{h} \to f'(x) + g'(x).
+    \]
+    \item \[
+    \frac{f(x+h)g(x+h) - f(x)g(x)}{h} = f(x+h) \frac{g(x+h) - g(x)}{h} + g(x) \frac{f(x+h) - f(x)}{h} \to f(x) g'(x) + g(x) f'(x).
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 54. $(1/f)'$, $(g/f)'$}
+
+\begin{theorem}
+Если $f$ дифференцируема в точке $x$ и $f(x) \neq 0$, то:
+\begin{enumerate}
+    \item $\left( \frac{1}{f} \right)'(x) = -\frac{f'(x)}{f^2(x)}$,
+    \item $\left( \frac{g}{f} \right)'(x) = \frac{g'(x) f(x) - g(x) f'(x)}{f^2(x)}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item \[
+    \frac{\frac{1}{f(x+h)} - \frac{1}{f(x)}}{h} = \frac{f(x) - f(x+h)}{h f(x+h) f(x)} \to -\frac{f'(x)}{f^2(x)}.
+    \]
+    \item Применяем правило произведения: $\frac{g}{f} = g \cdot \frac{1}{f}$, тогда:
+    \[
+    \left( \frac{g}{f} \right)' = g' \cdot \frac{1}{f} + g \cdot \left( -\frac{f'}{f^2} \right) = \frac{g' f - g f'}{f^2}.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 55. $(g(f))'$, $(f^{-1})'$}
+
+\begin{theorem}[Производная композиции]
+Если $f$ дифференцируема в точке $x$, а $g$ дифференцируема в точке $f(x)$, то:
+\[
+(g \circ f)'(x) = g'(f(x)) \cdot f'(x).
+\]
+\end{theorem}
+
+\begin{proofnote}
+Пусть $y = f(x)$, $k = f(x+h) - f(x)$. Тогда:
+\[
+\frac{g(f(x+h)) - g(f(x))}{h} = \frac{g(y+k) - g(y)}{k} \cdot \frac{k}{h}.
+\]
+Если $k \neq 0$, то при $h \to 0$ первый множитель стремится к $g'(y)$, второй — к $f'(x)$.
+Если $k = 0$, то левая часть равна нулю, и формула также верна.
+\end{proofnote}
+
+\begin{theorem}[Производная обратной функции]
+Если $f$ непрерывна и строго монотонна на промежутке, дифференцируема в точке $x$ и $f'(x) \neq 0$, то обратная функция $f^{-1}$ дифференцируема в точке $y = f(x)$, и:
+\[
+(f^{-1})'(y) = \frac{1}{f'(x)} = \frac{1}{f'(f^{-1}(y))}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Пусть $y = f(x)$, $y + k = f(x + h)$. Тогда $h = f^{-1}(y+k) - f^{-1}(y)$.
+\[
+\frac{f^{-1}(y+k) - f^{-1}(y)}{k} = \frac{h}{f(x+h) - f(x)} \to \frac{1}{f'(x)}.
+\]
+\end{proofnote}
+
+\section*{Билет 56. Первая теорема Вейерштрасса}
+
+\begin{theorem}[Первая теорема Вейерштрасса]
+Если функция $f$ непрерывна на отрезке $[a, b]$, то она ограничена на $[a, b]$.
+\end{theorem}
+
+\begin{proofnote}
+От противного. Пусть $f$ не ограничена.
+Тогда для каждого $n \in \N$ найдётся $x_n \in [a, b]$ такое, что $|f(x_n)| > n$.
+Последовательность $\{x_n\}$ ограничена, по теореме Больцано–Вейерштрасса выделяем сходящуюся подпоследовательность $x_{n_k} \to c \in [a, b]$.
+По непрерывности $f$ в точке $c$: $f(x_{n_k}) \to f(c)$, но $|f(x_{n_k})| > n_k \to \infty$ — противоречие.
+\end{proofnote}
+
+\section*{Билет 57. Вторая теорема Вейерштрасса}
+
+\begin{theorem}[Вторая теорема Вейерштрасса]
+Если функция $f$ непрерывна на отрезке $[a, b]$, то она достигает своих наибольшего и наименьшего значений на $[a, b]$.
+\end{theorem}
+
+\begin{proofnote}
+По первой теореме Вейерштрасса $f$ ограничена. Пусть $M = \sup\limits_{[a,b]} f(x)$.
+Тогда найдётся последовательность $\{x_n\} \subset [a, b]$ такая, что $f(x_n) \to M$.
+Выделим сходящуюся подпоследовательность $x_{n_k} \to c \in [a, b]$.
+По непрерывности $f(c) = \lim f(x_{n_k}) = M$.
+Аналогично для минимума.
+\end{proofnote}
+
+\section*{Билет 58. Теорема Ферма}
+
+\begin{theorem}[Ферма]
+Если функция $f$ имеет локальный экстремум в точке $x_0$ (внутренней точке области определения) и дифференцируема в этой точке, то $f'(x_0) = 0$.
+\end{theorem}
+
+\begin{proofnote}
+Пусть $x_0$ — точка локального максимума.
+Тогда для малых $h > 0$: $f(x_0 + h) \leq f(x_0)$, откуда:
+\[
+\frac{f(x_0 + h) - f(x_0)}{h} \leq 0 \Rightarrow f'_+(x_0) \leq 0.
+\]
+Для $h < 0$: $f(x_0 + h) \leq f(x_0)$, откуда:
+\[
+\frac{f(x_0 + h) - f(x_0)}{h} \geq 0 \Rightarrow f'_-(x_0) \geq 0.
+\]
+Так как $f$ дифференцируема, $f'_+(x_0) = f'_-(x_0) = f'(x_0)$, следовательно, $f'(x_0) = 0$.
+\end{proofnote}
+
+\section*{Билет 59. Теорема Ролля}
+
+\begin{theorem}[Ролль]
+Если функция $f$ непрерывна на $[a, b]$, дифференцируема на $(a, b)$ и $f(a) = f(b)$, то найдётся точка $c \in (a, b)$ такая, что $f'(c) = 0$.
+\end{theorem}
+
+\begin{proofnote}
+По теореме Вейерштрасса $f$ достигает на $[a, b]$ наибольшего $M$ и наименьшего $m$ значений.
+Если $M = m$, то $f$ постоянна, и $f'(x) = 0$ для всех $x$.
+Если $M > m$, то хотя бы одно из этих значений достигается во внутренней точке $c \in (a, b)$.
+По теореме Ферма $f'(c) = 0$.
+\end{proofnote}
+
+\section*{Билет 60. Теорема Лагранжа}
+
+\begin{theorem}[Лагранж]
+Если функция $f$ непрерывна на $[a, b]$ и дифференцируема на $(a, b)$, то найдётся точка $c \in (a, b)$ такая, что:
+\[
+f(b) - f(a) = f'(c)(b - a).
+\]
+\end{theorem}
+
+\begin{proofnote}
+Рассмотрим функцию:
+\[
+F(x) = f(x) - f(a) - \frac{f(b) - f(a)}{b - a} (x - a).
+\]
+Тогда $F(a) = F(b) = 0$.
+По теореме Ролля найдётся $c \in (a, b)$: $F'(c) = 0$, т.е.:
+\[
+f'(c) - \frac{f(b) - f(a)}{b - a} = 0.
+\]
+\end{proofnote}
+
+\section*{Билет 61. Теорема Коши}
+
+\begin{theorem}[Коши]
+Если функции $f$ и $g$ непрерывны на $[a, b]$, дифференцируемы на $(a, b)$ и $g'(x) \neq 0$ для всех $x \in (a, b)$, то найдётся точка $c \in (a, b)$ такая, что:
+\[
+\frac{f(b) - f(a)}{g(b) - g(a)} = \frac{f'(c)}{g'(c)}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Заметим, что $g(b) \neq g(a)$ (иначе по теореме Ролля $g'(x) = 0$ для некоторого $x$).
+Рассмотрим функцию:
+\[
+F(x) = f(x) - f(a) - \frac{f(b) - f(a)}{g(b) - g(a)} (g(x) - g(a)).
+\]
+Тогда $F(a) = F(b) = 0$. По теореме Ролля найдётся $c \in (a, b)$: $F'(c) = 0$, т.е.:
+\[
+f'(c) - \frac{f(b) - f(a)}{g(b) - g(a)} g'(c) = 0.
+\]
+\end{proofnote}
+
+\section*{Билет 62. $c'$, $x'$, $(x^n)'$, $(1/x^n)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(c)' = 0$.
+    \item $(x)' = 1$.
+    \item $(x^n)' = n x^{n-1}$ для $n \in \N$.
+    \item $\left( \frac{1}{x^n} \right)' = -\frac{n}{x^{n+1}}$ для $n \in \N$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item По определению производной.
+    \item $\frac{(x+h) - x}{h} = 1$.
+    \item По индукции или через бином Ньютона.
+    \item Применяем правило для $(x^{-n})' = -n x^{-n-1}$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 63. $(e^x)'$, $(\ln x)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(e^x)' = e^x$.
+    \item $(\ln x)' = \frac{1}{x}$ для $x > 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item \[
+    \frac{e^{x+h} - e^x}{h} = e^x \cdot \frac{e^h - 1}{h} \to e^x \cdot 1 = e^x.
+    \]
+    \item \[
+    \frac{\ln(x+h) - \ln x}{h} = \frac{1}{h} \ln\left(1 + \frac{h}{x}\right) = \frac{\ln\left(1 + \frac{h}{x}\right)}{\frac{h}{x}} \cdot \frac{1}{x} \to 1 \cdot \frac{1}{x} = \frac{1}{x}.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 64. $(x^r)'$}
+
+\begin{theorem}
+Для любого $r \in \R$:
+\[
+(x^r)' = r x^{r-1}, \quad x > 0.
+\]
+\end{theorem}
+
+\begin{proofnote}
+$x^r = e^{r \ln x}$. По правилу дифференцирования композиции:
+\[
+(x^r)' = e^{r \ln x} \cdot \frac{r}{x} = x^r \cdot \frac{r}{x} = r x^{r-1}.
+\]
+\end{proofnote}
+
+\section*{Билет 65. $(\sin x)'$, $(\cos x)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(\sin x)' = \cos x$.
+    \item $(\cos x)' = -\sin x$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item \[
+    \frac{\sin(x+h) - \sin x}{h} = \frac{2 \sin\frac{h}{2} \cos\left(x + \frac{h}{2}\right)}{h} = \frac{\sin\frac{h}{2}}{\frac{h}{2}} \cdot \cos\left(x + \frac{h}{2}\right) \to 1 \cdot \cos x.
+    \]
+    \item Аналогично или через $\cos x = \sin\left(\frac{\pi}{2} - x\right)$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 66. $(\tg x)'$, $(\ctg x)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(\tg x)' = \frac{1}{\cos^2 x} = \sec^2 x$.
+    \item $(\ctg x)' = -\frac{1}{\sin^2 x} = -\csc^2 x$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item $\tg x = \frac{\sin x}{\cos x}$. По правилу частного:
+    \[
+    (\tg x)' = \frac{\cos x \cdot \cos x - \sin x \cdot (-\sin x)}{\cos^2 x} = \frac{\cos^2 x + \sin^2 x}{\cos^2 x} = \frac{1}{\cos^2 x}.
+    \]
+    \item Аналогично для $\ctg x = \frac{\cos x}{\sin x}$.
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 67. $(\arcsin x)'$, $(\arccos x)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(\arcsin x)' = \frac{1}{\sqrt{1 - x^2}}$ для $|x| < 1$.
+    \item $(\arccos x)' = -\frac{1}{\sqrt{1 - x^2}}$ для $|x| < 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+Для $\arcsin x$: пусть $y = \arcsin x$, тогда $x = \sin y$, $-\frac{\pi}{2} < y < \frac{\pi}{2}$.
+По теореме о производной обратной функции:
+\[
+(\arcsin x)' = \frac{1}{(\sin y)'} = \frac{1}{\cos y} = \frac{1}{\sqrt{1 - \sin^2 y}} = \frac{1}{\sqrt{1 - x^2}}.
+\]
+Для $\arccos x$ аналогично или через $\arccos x = \frac{\pi}{2} - \arcsin x$.
+\end{proofnote}
+
+\section*{Билет 68. $(\arctg x)'$, $(\arcctg x)'$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(\arctg x)' = \frac{1}{1 + x^2}$.
+    \item $(\arcctg x)' = -\frac{1}{1 + x^2}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+Для $\arctg x$: пусть $y = \arctg x$, тогда $x = \tg y$, $-\frac{\pi}{2} < y < \frac{\pi}{2}$.
+\[
+(\arctg x)' = \frac{1}{(\tg y)'} = \frac{1}{\frac{1}{\cos^2 y}} = \cos^2 y = \frac{1}{1 + \tg^2 y} = \frac{1}{1 + x^2}.
+\]
+Для $\arcctg x$ аналогично или через $\arcctg x = \frac{\pi}{2} - \arctg x$.
+\end{proofnote}
+
+\section*{Билет 69. Определение $f^{(n)}(x)$ производной n-го порядка}
+
+\begin{definition}
+Производная нулевого порядка: $f^{(0)}(x) = f(x)$.
+Производная первого порядка: $f^{(1)}(x) = f'(x)$.
+Производная $n$-го порядка ($n \geq 2$):
+\[
+f^{(n)}(x) = \left( f^{(n-1)}(x) \right)'.
+\]
+\end{definition}
+
+\section*{Билет 70. $(cf)^{(n)}$, $(f + g)^{(n)}$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(cf)^{(n)} = c f^{(n)}$.
+    \item $(f + g)^{(n)} = f^{(n)} + g^{(n)}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+По индукции, используя линейность первой производной.
+\end{proofnote}
+
+\section*{Билет 71. $(f(ax+b))^{(n)}$}
+
+\begin{theorem}
+Если $g(x) = f(ax + b)$, то:
+\[
+g^{(n)}(x) = a^n f^{(n)}(ax + b).
+\]
+\end{theorem}
+
+\begin{proofnote}
+Индукция по $n$.
+База $n=1$: $g'(x) = a f'(ax + b)$.
+Шаг: предположим верно для $n$, тогда:
+\[
+g^{(n+1)}(x) = \left( a^n f^{(n)}(ax + b) \right)' = a^n \cdot a f^{(n+1)}(ax + b) = a^{n+1} f^{(n+1)}(ax + b).
+\]
+\end{proofnote}
+
+\section*{Билет 72. $(x^k)^{(n)}$}
+
+\begin{theorem}
+Для натурального $k$:
+\[
+(x^k)^{(n)} = 
+\begin{cases}
+\frac{k!}{(k-n)!} x^{k-n}, & n \leq k, \\
+0, & n > k.
+\end{cases}
+\]
+\end{theorem}
+
+\begin{proofnote}
+Индукция по $n$.
+Для $n=1$: $(x^k)' = k x^{k-1}$.
+Предположим верно для $n$: $(x^k)^{(n)} = k(k-1)\dots(k-n+1) x^{k-n}$.
+Тогда:
+\[
+(x^k)^{(n+1)} = \left( k(k-1)\dots(k-n+1) x^{k-n} \right)' = k(k-1)\dots(k-n+1)(k-n) x^{k-n-1}.
+\]
+При $n = k$: $(x^k)^{(k)} = k!$. При $n > k$: производная равна нулю.
+\end{proofnote}
+
+\section*{Билет 73. $(x^r)^{(n)}$}
+
+\begin{theorem}
+Для $r \in \R$, $x > 0$:
+\[
+(x^r)^{(n)} = r(r-1)\dots(r-n+1) x^{r-n}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Индукция по $n$.
+База: $(x^r)' = r x^{r-1}$.
+Шаг: аналогично билету 72.
+\end{proofnote}
+
+\section*{Билет 74. $(e^x)^{(n)}$, $(\ln x)^{(n)}$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(e^x)^{(n)} = e^x$.
+    \item $(\ln x)^{(n)} = (-1)^{n-1} \frac{(n-1)!}{x^n}$ для $n \geq 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+\begin{enumerate}
+    \item Очевидно по индукции.
+    \item База: $(\ln x)' = \frac{1}{x}$.
+    Предположим: $(\ln x)^{(n)} = (-1)^{n-1} \frac{(n-1)!}{x^n}$.
+    Тогда:
+    \[
+    (\ln x)^{(n+1)} = \left( (-1)^{n-1} (n-1)! x^{-n} \right)' = (-1)^{n-1} (n-1)! (-n) x^{-n-1} = (-1)^n n! x^{-(n+1)}.
+    \]
+\end{enumerate}
+\end{proofnote}
+
+\section*{Билет 75. $(\sin x)^{(n)}$, $(\cos x)^{(n)}$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $(\sin x)^{(n)} = \sin\left( x + \frac{n\pi}{2} \right)$.
+    \item $(\cos x)^{(n)} = \cos\left( x + \frac{n\pi}{2} \right)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+Индукция по $n$.
+База: $(\sin x)' = \cos x = \sin(x + \pi/2)$.
+Шаг: предположим верно для $n$, тогда:
+\[
+(\sin x)^{(n+1)} = \left( \sin\left( x + \frac{n\pi}{2} \right) \right)' = \cos\left( x + \frac{n\pi}{2} \right) = \sin\left( x + \frac{(n+1)\pi}{2} \right).
+\]
+Аналогично для $\cos x$.
+\end{proofnote}
+
+\section*{Билет 76. $((x-a)^k)^{(n)}$, $((1+x)^r)^{(n)}$, $(\ln(1+x))^{(n)}$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item $((x-a)^k)^{(n)} = \frac{k!}{(k-n)!} (x-a)^{k-n}$ при $n \leq k$, иначе 0.
+    \item $((1+x)^r)^{(n)} = r(r-1)\dots(r-n+1) (1+x)^{r-n}$.
+    \item $(\ln(1+x))^{(n)} = (-1)^{n-1} \frac{(n-1)!}{(1+x)^n}$ при $n \geq 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+Следует из билетов 72, 73, 74 с соответствующими сдвигами.
+\end{proofnote}
+
+\section*{Билет 77. Формула Тейлора для полинома}
+
+\begin{theorem}
+Если $P(x)$ — полином степени $n$:
+\[
+P(x) = \sum_{k=0}^n a_k x^k,
+\]
+то для любого $a$:
+\[
+P(x) = \sum_{k=0}^n \frac{P^{(k)}(a)}{k!} (x - a)^k.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Подставим $x = a + t$, раскроем $P(a+t)$ по степеням $t$ и найдём коэффициенты через производные в точке $a$.
+\end{proofnote}
+
+\section*{Билет 78. Формула Тейлора с остатком в форме Пеано}
+
+\begin{theorem}[Тейлор–Пеано]
+Если функция $f$ имеет в точке $a$ производные до порядка $n$, то:
+\[
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!} (x - a)^k + o((x-a)^n), \quad x \to a.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Индукция по $n$.
+База $n=1$: это определение дифференцируемости.
+Шаг: используем правило Лопиталя или представление через интеграл.
+\end{proofnote}
+
+\section*{Билет 79. Формула Тейлора с остатком в форме Лагранжа}
+
+\begin{theorem}[Тейлор–Лагранж]
+Если $f$ имеет на $[a, x]$ непрерывные производные до порядка $n$, а на $(a, x)$ — производную порядка $n+1$, то найдётся точка $c \in (a, x)$ такая, что:
+\[
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(a)}{k!} (x - a)^k + \frac{f^{(n+1)}(c)}{(n+1)!} (x - a)^{n+1}.
+\]
+\end{theorem}
+
+\begin{proofnote}
+Рассмотрим функцию:
+\[
+R_n(t) = f(x) - \sum_{k=0}^n \frac{f^{(k)}(t)}{k!} (x - t)^k.
+\]
+Покажем, что $R_n(a) = \frac{f^{(n+1)}(c)}{(n+1)!} (x-a)^{n+1}$, применяя теорему Коши к $R_n(t)$ и $(x-t)^{n+1}$.
+\end{proofnote}
+
+\section*{Билет 80. Применение формулы Тейлора к $e^x$}
+
+\begin{theorem}
+Для любого $n$:
+\[
+e^x = \sum_{k=0}^n \frac{x^k}{k!} + \frac{e^c}{(n+1)!} x^{n+1}, \quad c \in (0, x) \text{ или } (x, 0).
+\]
+\end{theorem}
+
+\begin{proofnote}
+По формуле Тейлора–Лагранжа с $a=0$, $f^{(k)}(0) = 1$ для всех $k$.
+\end{proofnote}
+
+\section*{Билет 81. Применение формулы Тейлора к $(1+x)^r$}
+
+\begin{theorem}
+Для $r \in \R$:
+\[
+(1+x)^r = \sum_{k=0}^n \binom{r}{k} x^k + \binom{r}{n+1} (1+c)^{r-n-1} x^{n+1},
+\]
+где $\binom{r}{k} = \frac{r(r-1)\dots(r-k+1)}{k!}$, $c$ между 0 и $x$.
+\end{theorem}
+
+\begin{proofnote}
+По формуле Тейлора–Лагранжа с $a=0$, $f^{(k)}(0) = r(r-1)\dots(r-k+1)$.
+\end{proofnote}
+
+\section*{Билет 82. Применение формулы Тейлора к $\ln(1+x)$}
+
+\begin{theorem}
+Для $x > -1$:
+\[
+\ln(1+x) = \sum_{k=1}^n (-1)^{k-1} \frac{x^k}{k} + (-1)^n \frac{x^{n+1}}{(n+1)(1+c)^{n+1}},
+\]
+где $c$ между 0 и $x$.
+\end{theorem}
+
+\begin{proofnote}
+По формуле Тейлора–Лагранжа с $a=0$, $f^{(k)}(0) = (-1)^{k-1} (k-1)!$.
+\end{proofnote}
+
+\section*{Билет 83. Применение формулы Тейлора к $\sin x$, $\cos x$}
+
+\begin{theorem}
+\begin{enumerate}
+    \item \[
+    \sin x = \sum_{k=0}^n (-1)^k \frac{x^{2k+1}}{(2k+1)!} + (-1)^{n+1} \frac{\cos c}{(2n+3)!} x^{2n+3}.
+    \]  
+    \item \[
+    \cos x = \sum_{k=0}^n (-1)^k \frac{x^{2k}}{(2k)!} + (-1)^{n+1} \frac{\cos c}{(2n+2)!} x^{2n+2}.
+    \]
+\end{enumerate}
+\end{theorem}
+
+\begin{proofnote}
+По формуле Тейлора–Лагранжа с $a=0$, учитывая, что производные синуса и косинуса периодичны.
+\end{proofnote}
+
+\end{document}

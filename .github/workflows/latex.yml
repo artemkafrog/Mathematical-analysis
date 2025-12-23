@@ -22,8 +22,9 @@ jobs:
       uses: xu-cheng/latex-action@v4
       with:
         root_file: MathAnal_1_semester.tex
-        texlive_version: latest
-        latexmk_use_xelatex: true
+        extra_system_packages: "texlive-lang-cyrillic"
+        compiler: latexmk
+        args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
 
 
     - name: Move PDFs to public directory

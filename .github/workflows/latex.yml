@@ -1,0 +1,66 @@
+name: Compile LaTeX to PDF and Deploy to Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: # Позволяет запустить сборку вручную из вкладки Actions
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Compile LaTeX with XeLaTeX
+      uses: xu-cheng/latex-action@v4 # Действие для компиляции LaTeX[citation:1]
+      with:
+        root_file: MathAnal_1_semester.tex # Укажите ваш файл
+        latexmk_use_xelatex: true # Использовать XeLaTeX[citation:1]
+        compiler: latexmk
+        args: -pdf -file-line-error -halt-on-error -interaction=nonstopmode
+
+    - name: Prepare artifact for Pages
+      # Создаем папку и копируем туда PDF
+      run: |
+        mkdir -p ./gh-pages-artifact
+        cp -f MathAnal_1_semester.pdf ./gh-pages-artifact/
+        # Создаем простой индекс HTML, чтобы можно было найти файл
+        echo '<!DOCTYPE html>
+        <html>
+        <head><title>LaTeX PDF</title></head>
+        <body>
+          <h1>Скомпилированный PDF</h1>
+          <p>Файл доступен по ссылке: <a href="MathAnal_1_semester.pdf">MathAnal_1_semester.pdf</a></p>
+        </body>
+        </html>' > ./gh-pages-artifact/index.html
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./gh-pages-artifact # Папка, которую будем выкладывать на Pages
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build # Этот джоб зависит от успешного выполнения 'build'
+    if: github.ref == 'refs/heads/main' # Деплоим только при пуше в main
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
